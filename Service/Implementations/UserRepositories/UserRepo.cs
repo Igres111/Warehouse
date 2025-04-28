@@ -26,7 +26,7 @@ namespace Service.Implementations.UserRepositories
         #endregion
 
         #region Public Methods
-        public async Task<UserResponse> CreateUser(CreateUserDto user)
+        public async Task<UserResponse> RegisterUser(CreateUserDto user)
         {
             var userExists = await _context.users.FirstOrDefaultAsync(x => x.Email == user.Email);
             if (userExists != null)

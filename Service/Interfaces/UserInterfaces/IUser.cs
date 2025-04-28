@@ -10,6 +10,6 @@ namespace Service.Interfaces.UserInterfaces
 {
     public interface IUser
     {
-        public Task<UserResponse> CreateUser(CreateUserDto user);
+        public Task<UserResponse> RegisterUser(CreateUserDto user);
     }
 }

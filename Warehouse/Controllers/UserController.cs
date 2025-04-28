@@ -22,14 +22,14 @@ namespace Warehouse.Controllers
         #endregion
 
         #region POST Endpoints
-        [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUser(CreateUserDto user)
+        [HttpPost("Register-User")]
+        public async Task<IActionResult> RegisterUser(CreateUserDto user)
         {
             if(!ModelState.IsValid)
             {
                 throw new Exception("Invalid model state");
             }
-            var result = await _UserMethods.CreateUser(user);
+            var result = await _UserMethods.RegisterUser(user);
             return Ok(result);
         }
         #endregion
