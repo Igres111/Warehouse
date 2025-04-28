@@ -50,6 +50,23 @@ namespace Service.Implementations
             return allProducts;
         }
 
+        public async Task<ReceiveProductDto> FindProductsByName(string name)
+        {
+            var product = await _context.products.FirstOrDefaultAsync(x => x.Name == name);
+            if (product == null)
+            {
+                throw new Exception("Product not found");
+            }
+            var productForUser = new ReceiveProductDto()
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Category = product.Category,
+                QuantityInStock = product.QuantityInStock,
+                Price = product.Price,
+            };
+            return productForUser;
+        }
         #endregion
     }
 }

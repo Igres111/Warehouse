@@ -30,11 +30,9 @@ namespace Warehouse.Controllers
             await _ProductMethods.AddProduct(product);
             return Ok("Product added successfully");
         }
-
         #endregion
 
         #region GET Endpoints
-
         [HttpGet("Get-All-Products")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -45,7 +43,17 @@ namespace Warehouse.Controllers
             }
             return Ok(result);
         }
-    }
 
-        #endregion
+        [HttpGet("Find-Product-By-Name")]
+        public async Task<IActionResult> FindProductsByName(string name)
+        {
+            var result = await _ProductMethods.FindProductsByName(name);
+            if (result == null)
+            {
+                return NotFound("Product not found");
+            }
+            return Ok(result);
+        }
+    }
+    #endregion
 }
