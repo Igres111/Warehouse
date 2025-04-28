@@ -13,5 +13,6 @@ namespace Service.Interfaces
         public Task AddProduct(AddProductDto product);
         public Task<List<Product>> GetAllProducts();
         public Task<ReceiveProductDto> FindProductsByName(string name);
+        public Task<List<ReceiveProductDto>> FilterProductsByCategory(string category);
     }
 }

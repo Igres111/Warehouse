@@ -54,6 +54,17 @@ namespace Warehouse.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("Filter-Products-By-Category")]
+        public async Task<IActionResult> FilterProductsByCategory(string category)
+        {
+            var result = await _ProductMethods.FilterProductsByCategory(category);
+            if (result == null)
+            {
+                return NotFound("No products found in this category");
+            }
+            return Ok(result);
+        }
     }
     #endregion
 }

@@ -67,6 +67,24 @@ namespace Service.Implementations
             };
             return productForUser;
         }
+
+        public async Task<List<ReceiveProductDto>> FilterProductsByCategory(string category)
+        {
+            var products = await _context.products.Where(x => x.Category == category).ToListAsync();
+            if (products == null)
+            {
+                throw new Exception("No products found in this category");
+            }
+            var filteredProducts = products.Select(x => new ReceiveProductDto()
+            {
+                Name = x.Name,
+                Description = x.Description,
+                Category = x.Category,
+                QuantityInStock = x.QuantityInStock,
+                Price = x.Price,
+            }).ToList();
+            return filteredProducts;
+        }
         #endregion
     }
 }
