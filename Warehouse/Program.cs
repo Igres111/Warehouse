@@ -1,3 +1,7 @@
+using DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +17,10 @@ if (string.IsNullOrEmpty(key))
 {
     throw new Exception("JWT secret key is not set in the environment variables.");
 }
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connection);
+});
 
 var app = builder.Build();
 
