@@ -8,11 +8,18 @@ namespace Service.Implementations
 {
     public class ProductRepo : IProduct
     {
+        #region Fields
         public readonly AppDbContext _context;
+        #endregion
+
+        #region Constructor
         public ProductRepo(AppDbContext context)
         {
             _context = context;
         }
+        #endregion
+
+        #region Public Methods
         public async Task AddProduct(AddProductDto product)
         {
             var exists = await _context.products.FirstOrDefaultAsync(x => x.Name == product.Name);
@@ -42,5 +49,7 @@ namespace Service.Implementations
             }
             return allProducts;
         }
+
+        #endregion
     }
 }

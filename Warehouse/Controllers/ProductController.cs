@@ -8,30 +8,44 @@ namespace Warehouse.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        #region Fields
         public readonly IProduct _ProductMethods;
+        #endregion
+
+        #region Constructor
         public ProductController(IProduct ProductMethods)
         {
             _ProductMethods = ProductMethods;
         }
+        #endregion
+
+        #region POST Endpoints
         [HttpPost("Add-Product")]
         public async Task<IActionResult> AddProduct(AddProductDto product)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             await _ProductMethods.AddProduct(product);
             return Ok("Product added successfully");
         }
+
+        #endregion
+
+        #region GET Endpoints
+
         [HttpGet("Get-All-Products")]
         public async Task<IActionResult> GetAllProducts()
         {
-           var result = await _ProductMethods.GetAllProducts();
-           if (result == null)
-           {
+            var result = await _ProductMethods.GetAllProducts();
+            if (result == null)
+            {
                 return NotFound("No products found");
-           }
-           return Ok(result);
+            }
+            return Ok(result);
         }
     }
+
+        #endregion
 }
