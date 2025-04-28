@@ -14,5 +14,7 @@ namespace DataAccess.Entities
         public string Category { get; set; } = string.Empty;
         public int QuantityInStock { get; set; }
         public decimal Price { get; set; }
+        public User User { get; set; } = new User();
+        public Guid UserId { get; set; }
     }
 }
