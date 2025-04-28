@@ -1,5 +1,8 @@
 using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Service.Implementations;
+using Service.Interfaces;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +24,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(connection);
 });
+
+builder.Services.AddScoped<IProduct,ProductRepo>();
 
 var app = builder.Build();
 
