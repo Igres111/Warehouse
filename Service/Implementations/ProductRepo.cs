@@ -1,8 +1,10 @@
-﻿using DataAccess.Context;
+﻿using Azure;
+using DataAccess.Context;
 using DataAccess.Entities;
 using Dtos.ProductDtos;
 using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
+using Warehouse.Helpers;
 
 namespace Service.Implementations
 {
@@ -20,7 +22,7 @@ namespace Service.Implementations
         #endregion
 
         #region Public Methods
-        public async Task AddProduct(AddProductDto product)
+        public async Task<ProductResponse> AddProduct(AddProductDto product)
         {
             var exists = await _context.products.FirstOrDefaultAsync(x => x.Name == product.Name);
             if(exists != null)
@@ -39,6 +41,7 @@ namespace Service.Implementations
             };
             await _context.products.AddAsync(newProduct);
             await _context.SaveChangesAsync();
+            return new ProductResponse { Id= newProduct.Id, Message = "Product added successfully" };
         }
         public async Task<List<Product>> GetAllProducts()
         {

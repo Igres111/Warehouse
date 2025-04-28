@@ -1,6 +1,7 @@
 ﻿using Dtos.ProductDtos;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
+using Warehouse.Helpers;
 
 namespace Warehouse.Controllers
 {
@@ -27,8 +28,8 @@ namespace Warehouse.Controllers
             {
                 return BadRequest(ModelState);
             }
-            await _ProductMethods.AddProduct(product);
-            return Ok("Product added successfully");
+            var result = await _ProductMethods.AddProduct(product);
+            return Ok(result);
         }
         #endregion
 
