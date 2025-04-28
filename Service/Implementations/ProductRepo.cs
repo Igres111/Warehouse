@@ -45,7 +45,10 @@ namespace Service.Implementations
         }
         public async Task<List<Product>> GetAllProducts()
         {
-            var allProducts = await _context.products.ToListAsync();
+            var allProducts = await _context.products
+                .Where(x => x.Delete == null)
+                .ToListAsync();
+
             if(allProducts == null)
             {
                 throw new Exception("No products found");
@@ -55,7 +58,10 @@ namespace Service.Implementations
 
         public async Task<ReceiveProductDto> FindProductsByName(string name)
         {
-            var product = await _context.products.FirstOrDefaultAsync(x => x.Name == name);
+            var product = await _context.products
+                .Where(x => x.Delete == null)
+                .FirstOrDefaultAsync(x => x.Name == name);
+
             if (product == null)
             {
                 throw new Exception("Product not found");
@@ -73,7 +79,10 @@ namespace Service.Implementations
 
         public async Task<List<ReceiveProductDto>> FilterProductsByCategory(string category)
         {
-            var products = await _context.products.Where(x => x.Category == category).ToListAsync();
+            var products = await _context.products
+                .Where(x => x.Category == category && x.Delete == null)
+                .ToListAsync();
+
             if (products == null)
             {
                 throw new Exception("No products found in this category");
@@ -89,9 +98,11 @@ namespace Service.Implementations
             return filteredProducts;
         }
 
-     public async Task<ProductResponse> UpdateProduct( UpdateProductDto product)
+        public async Task<ProductResponse> UpdateProduct( UpdateProductDto product)
         {
-            var productExists = await _context.products.FirstOrDefaultAsync(x => x.Id == product.Id);
+            var productExists = await _context.products
+                .Where(x => x.Delete == null)
+                .FirstOrDefaultAsync(x => x.Id == product.Id);
             if (productExists == null)
             {
                 throw new Exception("Product doesn't exist");
@@ -106,6 +117,18 @@ namespace Service.Implementations
             _context.products.Update(productExists);
             _context.SaveChanges();
             return new ProductResponse() { Id = productExists.Id, Message = "Product updated successfully" };
+        }
+
+        public async Task<ProductResponse> DeleteProduct(Guid id)
+        {
+            var product = await _context.products.FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null)
+            {
+                throw new Exception("Product not found");
+            }
+            product.Delete = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return new ProductResponse() { Id = product.Id, Message = "Product deleted successfully" };
         }
         #endregion
     }

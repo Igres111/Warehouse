@@ -1,7 +1,6 @@
 ﻿using Dtos.ProductDtos;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
-using Warehouse.Helpers;
 
 namespace Warehouse.Controllers
 {
@@ -28,9 +27,9 @@ namespace Warehouse.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _ProductMethods.AddProduct(product);
-            return Ok(result);
-        }
+                var result = await _ProductMethods.AddProduct(product);
+                return Ok(result);
+            }
         #endregion
 
         #region GET Endpoints
@@ -48,7 +47,7 @@ namespace Warehouse.Controllers
         [HttpGet("Find-Product-By-Name")]
         public async Task<IActionResult> FindProductsByName(string name)
         {
-            var result = await _ProductMethods.FindProductsByName(name);
+                var result = await _ProductMethods.FindProductsByName(name);
             if (result == null)
             {
                 return NotFound("Product not found");
@@ -69,7 +68,6 @@ namespace Warehouse.Controllers
         #endregion
 
         #region PUT Endpoints
-
         [HttpPut("Update-Product")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto product)
         {
@@ -77,20 +75,26 @@ namespace Warehouse.Controllers
             {
                 return BadRequest(ModelState);
             }
-            try
+            var response = await _ProductMethods.UpdateProduct(product);
+            if(response == null)
             {
-                var response = await _ProductMethods.UpdateProduct(product);
-                return Ok(response);
+                return NotFound("Product not found");
             }
-            catch (Exception ex)
+            return Ok(response);
+        }
+        #endregion
+
+        #region DELETE Endpoints
+        [HttpDelete("Delete-Product")]
+        public async Task<IActionResult> DeleteProduct(Guid id)
+        {
+            var response = await _ProductMethods.DeleteProduct(id);
+            if (response == null)
             {
-                if (ex.Message == "Product doesn't exist")
-                {
-                    return NotFound(ex.Message);
-                }
+                return NotFound("Product not found");
             }
-            return BadRequest("An error occurred while updating the product");
+            return Ok(response);
         }
         #endregion
     }
-    }
+}
