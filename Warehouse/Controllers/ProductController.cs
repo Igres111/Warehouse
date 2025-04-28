@@ -66,6 +66,31 @@ namespace Warehouse.Controllers
             }
             return Ok(result);
         }
+        #endregion
+
+        #region PUT Endpoints
+
+        [HttpPut("Update-Product")]
+        public async Task<IActionResult> UpdateProduct(UpdateProductDto product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var response = await _ProductMethods.UpdateProduct(product);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "Product doesn't exist")
+                {
+                    return NotFound(ex.Message);
+                }
+            }
+            return BadRequest("An error occurred while updating the product");
+        }
+        #endregion
     }
-    #endregion
-}
+    }

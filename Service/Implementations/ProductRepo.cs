@@ -88,6 +88,25 @@ namespace Service.Implementations
             }).ToList();
             return filteredProducts;
         }
+
+     public async Task<ProductResponse> UpdateProduct( UpdateProductDto product)
+        {
+            var productExists = await _context.products.FirstOrDefaultAsync(x => x.Id == product.Id);
+            if (productExists == null)
+            {
+                throw new Exception("Product doesn't exist");
+            }
+            Console.WriteLine(productExists.Id);
+            productExists.Name = product.Name ?? productExists.Name;
+            productExists.Description = product.Description ?? productExists.Description;
+            productExists.Category = product.Category ?? productExists.Category;
+            productExists.QuantityInStock = (int)(product.QuantityInStock == null ? productExists.QuantityInStock : product.QuantityInStock);
+            productExists.Price = (decimal)(product.Price == null ? productExists.Price : product.Price);
+            productExists.UpdatedAt = DateTime.UtcNow;
+            _context.products.Update(productExists);
+            _context.SaveChanges();
+            return new ProductResponse() { Id = productExists.Id, Message = "Product updated successfully" };
+        }
         #endregion
     }
 }
