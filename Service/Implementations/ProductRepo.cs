@@ -33,5 +33,14 @@ namespace Service.Implementations
             await _context.products.AddAsync(newProduct);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Product>> GetAllProducts()
+        {
+            var allProducts = await _context.products.ToListAsync();
+            if(allProducts == null)
+            {
+                throw new Exception("No products found");
+            }
+            return allProducts;
+        }
     }
 }

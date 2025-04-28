@@ -23,5 +23,15 @@ namespace Warehouse.Controllers
             await _ProductMethods.AddProduct(product);
             return Ok("Product added successfully");
         }
+        [HttpGet("Get-All-Products")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+           var result = await _ProductMethods.GetAllProducts();
+           if (result == null)
+           {
+                return NotFound("No products found");
+           }
+           return Ok(result);
+        }
     }
 }
