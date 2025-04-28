@@ -3,10 +3,10 @@ using DataAccess.Context;
 using DataAccess.Entities;
 using Dtos.ProductDtos;
 using Microsoft.EntityFrameworkCore;
-using Service.Interfaces;
+using Service.Interfaces.ProductInterfaces;
 using Warehouse.Helpers;
 
-namespace Service.Implementations
+namespace Service.Implementations.ProductRepositorys
 {
     public class ProductRepo : IProduct
     {
@@ -80,7 +80,7 @@ namespace Service.Implementations
         public async Task<List<ReceiveProductDto>> FilterProductsByCategory(string category)
         {
             var products = await _context.products
-                .Where(x => x.Category == category && x.Delete == null)
+                .Where(x => x.Category == category || x.Delete == null)
                 .ToListAsync();
 
             if (products == null)

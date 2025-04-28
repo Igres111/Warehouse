@@ -8,7 +8,7 @@ using Dtos.ProductDtos;
 using Warehouse.Helpers;
 
 
-namespace Service.Interfaces
+namespace Service.Interfaces.ProductInterfaces
 {
     public interface IProduct
     {

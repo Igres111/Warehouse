@@ -2,8 +2,10 @@ using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Serilog;
-using Service.Implementations;
-using Service.Interfaces;
+using Service.Implementations.ProductRepositorys;
+using Service.Implementations.UserRepositories;
+using Service.Interfaces.ProductInterfaces;
+using Service.Interfaces.UserInterfaces;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +39,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<IProduct,ProductRepo>();
+builder.Services.AddScoped<IUser, UserRepo>();
 #endregion
 
 var app = builder.Build();

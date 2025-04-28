@@ -1,8 +1,8 @@
 ﻿using Dtos.ProductDtos;
 using Microsoft.AspNetCore.Mvc;
-using Service.Interfaces;
+using Service.Interfaces.ProductInterfaces;
 
-namespace Warehouse.Controllers
+namespace Warehouse.Controllers.ProductController
 {
     [Route("api/[controller]")]
     [ApiController]
