@@ -67,7 +67,7 @@ namespace Warehouse.Controllers.ProductController
             }
             return Ok(result);
         }
-        [HttpGet("Get-Product-By-Id")]
+        [HttpGet("Get-Product-By-Id/{id}")]
         public async Task<IActionResult> GetProductById(Guid id)
         {
             var result = await _ProductMethods.GetProductById(id);

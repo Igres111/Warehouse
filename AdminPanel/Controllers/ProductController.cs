@@ -19,9 +19,9 @@ namespace AdminPanel.Controllers
             var products = await _httpClient.GetFromJsonAsync<List<ProductViewModel>>("/api/Product/Get-All-Products");
             return View(products);
         }
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var product = await _httpClient.GetFromJsonAsync<ProductViewModel>($"api/Product/Update-Product");
+            var product = await _httpClient.GetFromJsonAsync<ProductViewModel>($"api/Product/Get-Product-By-Id/{id}");
             if (product == null)
             {
                 return NotFound();
@@ -31,7 +31,7 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductViewModel product)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/products/{product.Id}", product);
+            var response = await _httpClient.PutAsJsonAsync($"api/Product/Update-Product", product);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
