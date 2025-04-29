@@ -2,7 +2,9 @@
 using Dtos.UserDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Service.AuthToken;
 using Service.Helpers;
+using Service.Interfaces.TokenInterfaces;
 using Service.Interfaces.UserInterfaces;
 
 namespace Warehouse.Controllers.UserController
@@ -13,12 +15,14 @@ namespace Warehouse.Controllers.UserController
     {
         #region Fields
         public readonly IUser _UserMethods;
+        public readonly IToken _tokenLogic;
         #endregion
 
         #region Constructor
-        public UserController(IUser UserMethods)
+        public UserController(IUser UserMethods,IToken tokenLogic)
         {
             _UserMethods = UserMethods;
+            _tokenLogic = tokenLogic;
         }
         #endregion
 
@@ -46,6 +50,12 @@ namespace Warehouse.Controllers.UserController
             {
                 return BadRequest(e.Message);
             }
+        }
+        [HttpPost("refresh-access-token")]
+        public async Task<IActionResult> RefreshToken(string token)
+        {
+                var result = await _tokenLogic.RefreshAccessTokenAsync(token);
+                return Ok(result);
         }
         #endregion
     }
