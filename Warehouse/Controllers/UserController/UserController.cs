@@ -1,10 +1,11 @@
-﻿using Dtos.UserDtos;
+﻿using DataAccess.Entities;
+using Dtos.UserDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Helpers;
 using Service.Interfaces.UserInterfaces;
 
-namespace Warehouse.Controllers
+namespace Warehouse.Controllers.UserController
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -31,6 +32,20 @@ namespace Warehouse.Controllers
             }
             var result = await _UserMethods.RegisterUser(user);
             return Ok(result);
+        }
+
+        [HttpPost("LogIn-User")]
+        public async Task<IActionResult> LogInUser(LogInUserDto user)
+        {
+            try
+            {
+                var result = await _UserMethods.LogInUser(user);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         #endregion
     }

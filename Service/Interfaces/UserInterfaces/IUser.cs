@@ -11,5 +11,6 @@ namespace Service.Interfaces.UserInterfaces
     public interface IUser
     {
         public Task<UserResponse> RegisterUser(CreateUserDto user);
+        public Task<string> LogInUser(LogInUserDto user);
     }
 }

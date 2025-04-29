@@ -10,10 +10,11 @@ using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Service.Interfaces.TokenInterfaces;
 
 namespace Service.AuthToken
 {
-    public class TokenLogic
+    public class TokenLogic : IToken
     {
         public readonly AppDbContext _context;
         public readonly IConfiguration _configuration;

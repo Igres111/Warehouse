@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Service.AuthToken;
 using Service.Implementations.ProductRepositorys;
 using Service.Implementations.UserRepositories;
 using Service.Interfaces.ProductInterfaces;
+using Service.Interfaces.TokenInterfaces;
 using Service.Interfaces.UserInterfaces;
 using System;
 using System.Text;
@@ -61,6 +63,8 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<IProduct,ProductRepo>();
 builder.Services.AddScoped<IUser, UserRepo>();
+builder.Services.AddScoped<IToken, TokenLogic>();
+
 #endregion
 
 var app = builder.Build();
