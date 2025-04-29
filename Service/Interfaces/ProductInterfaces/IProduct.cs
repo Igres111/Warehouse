@@ -14,6 +14,7 @@ namespace Service.Interfaces.ProductInterfaces
     {
         public Task<ProductResponse> AddProduct(AddProductDto product);
         public Task<List<Product>> GetAllProducts();
+        public Task<ReceiveProductDto> GetProductById(Guid id);
         public Task<ReceiveProductDto> FindProductsByName(string name);
         public Task<List<ReceiveProductDto>> FilterProductsByCategory(string category);
         public Task<ProductResponse> UpdateProduct(UpdateProductDto product);

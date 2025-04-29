@@ -98,6 +98,26 @@ namespace Service.Implementations.ProductRepositorys
             return filteredProducts;
         }
 
+        public async Task<ReceiveProductDto> GetProductById(Guid id)
+        {
+            var product = await _context.products
+                .Where(x => x.Delete == null)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null)
+            {
+                throw new Exception("Product not found");
+            }
+            var productForUser = new ReceiveProductDto()
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Category = product.Category,
+                QuantityInStock = product.QuantityInStock,
+                Price = product.Price,
+            };
+            return productForUser;
+        }
+
         public async Task<ProductResponse> UpdateProduct( UpdateProductDto product)
         {
             var productExists = await _context.products

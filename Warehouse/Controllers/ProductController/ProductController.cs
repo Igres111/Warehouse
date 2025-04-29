@@ -67,6 +67,16 @@ namespace Warehouse.Controllers.ProductController
             }
             return Ok(result);
         }
+        [HttpGet("Get-Product-By-Id")]
+        public async Task<IActionResult> GetProductById(Guid id)
+        {
+            var result = await _ProductMethods.GetProductById(id);
+            if (result == null)
+            {
+                return NotFound("Product not found");
+            }
+            return Ok(result);
+        }
         #endregion
 
         #region PUT Endpoints
