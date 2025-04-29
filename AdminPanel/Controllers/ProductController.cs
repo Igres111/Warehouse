@@ -50,5 +50,23 @@ namespace AdminPanel.Controllers
             ModelState.AddModelError(string.Empty, "An error occurred while deleting the product.");
             return RedirectToAction("Index");
         }
+
+        public IActionResult Add()
+        {
+            return View(new ProductViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(ProductViewModel product)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/Product/Add-Product", product);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError(string.Empty, "An error occurred while adding the product.");
+            return View(product);
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿@using AdminPanel.Models
 @model List<AdminPanel.Models.ProductViewModel>
 
+<div>
+    <a href="@Url.Action("Add", "Product")" class="btn btn-primary">Add New Product</a>
+</div>
 <h2>Product List</h2>
 <div>
     @foreach (var product in Model)
