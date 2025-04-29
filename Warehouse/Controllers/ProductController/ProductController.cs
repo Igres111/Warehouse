@@ -21,7 +21,7 @@ namespace Warehouse.Controllers.ProductController
         #endregion
 
         #region POST Endpoints
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("Add-Product")]
         public async Task<IActionResult> AddProduct(AddProductDto product)
         {
@@ -70,7 +70,7 @@ namespace Warehouse.Controllers.ProductController
         #endregion
 
         #region PUT Endpoints
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("Update-Product")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto product)
         {
