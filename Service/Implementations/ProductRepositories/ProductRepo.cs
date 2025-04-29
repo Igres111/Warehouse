@@ -24,7 +24,7 @@ namespace Service.Implementations.ProductRepositorys
         #region Public Methods
         public async Task<ProductResponse> AddProduct(AddProductDto product)
         {
-            var exists = await _context.products.FirstOrDefaultAsync(x => x.Name == product.Name);
+            var exists = await _context.Products.FirstOrDefaultAsync(x => x.Name == product.Name);
             if(exists != null)
             {
                 throw new Exception("Product already exists");
@@ -39,13 +39,13 @@ namespace Service.Implementations.ProductRepositorys
                 Price = product.Price,
                 CreatedAt = DateTime.UtcNow,
             };
-            await _context.products.AddAsync(newProduct);
+            await _context.Products.AddAsync(newProduct);
             await _context.SaveChangesAsync();
             return new ProductResponse { Id= newProduct.Id, Message = "Product added successfully" };
         }
         public async Task<List<Product>> GetAllProducts()
         {
-            var allProducts = await _context.products
+            var allProducts = await _context.Products
                 .Where(x => x.Delete == null)
                 .ToListAsync();
 
@@ -58,7 +58,7 @@ namespace Service.Implementations.ProductRepositorys
 
         public async Task<ReceiveProductDto> FindProductsByName(string name)
         {
-            var product = await _context.products
+            var product = await _context.Products
                 .Where(x => x.Delete == null)
                 .FirstOrDefaultAsync(x => x.Name == name);
 
@@ -79,7 +79,7 @@ namespace Service.Implementations.ProductRepositorys
 
         public async Task<List<ReceiveProductDto>> FilterProductsByCategory(string category)
         {
-            var products = await _context.products
+            var products = await _context.Products
                 .Where(x => x.Category == category || x.Delete == null)
                 .ToListAsync();
 
@@ -100,7 +100,7 @@ namespace Service.Implementations.ProductRepositorys
 
         public async Task<ReceiveProductDto> GetProductById(Guid id)
         {
-            var product = await _context.products
+            var product = await _context.Products
                 .Where(x => x.Delete == null)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (product == null)
@@ -120,7 +120,7 @@ namespace Service.Implementations.ProductRepositorys
 
         public async Task<ProductResponse> UpdateProduct( UpdateProductDto product)
         {
-            var productExists = await _context.products
+            var productExists = await _context.Products
                 .Where(x => x.Delete == null)
                 .FirstOrDefaultAsync(x => x.Id == product.Id);
             if (productExists == null)
@@ -134,14 +134,14 @@ namespace Service.Implementations.ProductRepositorys
             productExists.QuantityInStock = (int)(product.QuantityInStock == null ? productExists.QuantityInStock : product.QuantityInStock);
             productExists.Price = (decimal)(product.Price == null ? productExists.Price : product.Price);
             productExists.UpdatedAt = DateTime.UtcNow;
-            _context.products.Update(productExists);
+            _context.Products.Update(productExists);
             _context.SaveChanges();
             return new ProductResponse() { Id = productExists.Id, Message = "Product updated successfully" };
         }
 
         public async Task<ProductResponse> DeleteProduct(Guid id)
         {
-            var product = await _context.products.FirstOrDefaultAsync(x => x.Id == id);
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
             if (product == null)
             {
                 throw new Exception("Product not found");

@@ -8,7 +8,6 @@ using DataAccess.Entities;
 using Dtos.UserDtos;
 using Microsoft.EntityFrameworkCore;
 using Service.AuthToken;
-using Service.Helpers;
 using Service.Interfaces.TokenInterfaces;
 using Service.Interfaces.UserInterfaces;
 
@@ -32,7 +31,7 @@ namespace Service.Implementations.UserRepositories
         #region Public Methods
         public async Task<UserResponse> RegisterUser(CreateUserDto user)
         {
-            var userExists = await _context.users.FirstOrDefaultAsync(x => x.Email == user.Email);
+            var userExists = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
             if (userExists != null)
             {
                 throw new Exception("User already exists");
@@ -46,14 +45,14 @@ namespace Service.Implementations.UserRepositories
                 Password = BCrypt.Net.BCrypt.HashPassword(user.Password),
                 CreatedAt = DateTime.UtcNow,
             };
-            await _context.users.AddAsync(newUser);
+            await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
             return new UserResponse { Id = newUser.Id, Message = "User created successfully" };
         }
 
         public async Task<string> LogInUser(LogInUserDto user)
         {
-            var userExists = await _context.users.FirstOrDefaultAsync(x => x.Email == user.Email);
+            var userExists = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
             if (userExists == null)
             {
                 throw new Exception("User does not exist");

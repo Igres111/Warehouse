@@ -3,7 +3,6 @@ using Dtos.UserDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.AuthToken;
-using Service.Helpers;
 using Service.Interfaces.TokenInterfaces;
 using Service.Interfaces.UserInterfaces;
 

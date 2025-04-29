@@ -63,13 +63,13 @@ namespace Service.AuthToken
                 UserId = user.Id,
             };
 
-            await _context.refreshTokens.AddAsync(refreshToken);
+            await _context.RefreshTokens.AddAsync(refreshToken);
             await _context.SaveChangesAsync();
             return refreshToken;
         }
         public async Task<string> RefreshAccessTokenAsync(string refreshTokenInput)
         {
-            var refreshToken = await _context.refreshTokens.Include(el => el.User)
+            var refreshToken = await _context.RefreshTokens.Include(el => el.User)
                 .Include(el => el.User)
                 .FirstOrDefaultAsync(el => el.Token == refreshTokenInput);
             if (refreshToken == null || refreshToken.ExpirationDate < DateTime.Now)
@@ -79,7 +79,7 @@ namespace Service.AuthToken
             var newAccessToken = CreateAccessToken(refreshToken.User);
             var newRefreshToken = await CreateRefreshTokenAsync(refreshToken.User);
 
-            _context.refreshTokens.Remove(refreshToken);
+            _context.RefreshTokens.Remove(refreshToken);
             await _context.SaveChangesAsync();
             return newAccessToken;
         }

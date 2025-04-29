@@ -15,7 +15,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Service Configuration
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -65,11 +65,10 @@ builder.Services.AddScoped<IProduct,ProductRepo>();
 builder.Services.AddScoped<IUser, UserRepo>();
 builder.Services.AddScoped<IToken, TokenLogic>();
 
-#endregion
 
 var app = builder.Build();
 
-#region Middleware Configuration
+
 app.Use(async (context, next) =>
 {
     try
@@ -97,6 +96,5 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.MapControllers();
-#endregion
 
 app.Run();
