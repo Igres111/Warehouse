@@ -1,28 +1,35 @@
 ﻿@model AdminPanel.Models.ProductViewModel
 
-<h2>Edit Product</h2>
+<h2 class="text-center my-4">Edit Product</h2>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" method="post" class="container mt-4">
     <input type="hidden" asp-for="Id" />
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Description"></label>
-        <input asp-for="Description" />
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Category"></label>
-        <input asp-for="Category" />
+    <div class="mb-3">
+        <label asp-for="Category" class="form-label"></label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="QuantityInStock"></label>
-        <input asp-for="QuantityInStock" />
+    <div class="mb-3">
+        <label asp-for="QuantityInStock" class="form-label"></label>
+        <input asp-for="QuantityInStock" class="form-control" />
+        <span asp-validation-for="QuantityInStock" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Price"></label>
-        <input asp-for="Price" />
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
     </div>
-    <button type="submit">Save</button>
+    <button type="submit" class="btn btn-primary w-100">Save</button>
 </form>
+
+

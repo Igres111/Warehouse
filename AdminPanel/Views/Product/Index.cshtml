@@ -1,20 +1,33 @@
 ﻿@using AdminPanel.Models
 @model List<AdminPanel.Models.ProductViewModel>
 
-<div>
-    <a href="@Url.Action("Add", "Product")" class="btn btn-primary">Add New Product</a>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Product List</h2>
+        <a href="@Url.Action("Add", "Product")" class="btn btn-primary">Add New Product</a>
+    </div>
+
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text"><strong>Description:</strong> @product.Description</p>
+                        <p class="card-text"><strong>Category:</strong> @product.Category</p>
+                        <p class="card-text"><strong>Quantity in Stock:</strong> @product.QuantityInStock</p>
+                        <p class="card-text"><strong>Price:</strong> $@product.Price</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="@Url.Action("Edit", "Product", new { id = product.Id })" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
-<h2>Product List</h2>
-<div>
-    @foreach (var product in Model)
-    {
-        <div>
-            <h1>Name - @product.Name</h1>
-            <h2>Description - @product.Description</h2>
-            <h2>Category - @product.Category</h2>
-            <h2>QuantityInStock - @product.QuantityInStock and Price - @product.Price</h2>
-            <a href="@Url.Action("Edit", "Product", new { id = product.Id })">Edit</a>
-            <a asp-action="Delete" asp-route-id="@product.Id" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
-        </div>
-    }
+
+
 </div>
