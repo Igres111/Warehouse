@@ -15,7 +15,6 @@ namespace AdminPanel.Controllers
 
         public async Task<IActionResult> Index()
         {
-
             var products = await _httpClient.GetFromJsonAsync<List<ProductViewModel>>("/api/Product/Get-All-Products");
             return View(products);
         }
@@ -38,6 +37,18 @@ namespace AdminPanel.Controllers
             }
             ModelState.AddModelError(string.Empty, "An error occurred while updating the product.");
             return View(product);
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Product/Delete-Product?id={id}");
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index"); 
+            }
+
+            ModelState.AddModelError(string.Empty, "An error occurred while deleting the product.");
+            return RedirectToAction("Index");
         }
     }
 }
