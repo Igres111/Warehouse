@@ -80,7 +80,7 @@ namespace Warehouse.Controllers.ProductController
         #endregion
 
         #region PUT Endpoints
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("Update-Product")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto product)
         {
@@ -98,7 +98,7 @@ namespace Warehouse.Controllers.ProductController
         #endregion
 
         #region DELETE Endpoints
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("Delete-Product")]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
